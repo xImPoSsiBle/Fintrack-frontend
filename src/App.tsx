@@ -1,12 +1,10 @@
-import { Navigate } from 'react-router-dom'
-import { ChartsSection } from './components/dashboard/ChartsSection'
-import { PieChartsSection } from './components/dashboard/PieChartsSection'
-import { SummaryCards } from './components/dashboard/SummaryCards'
+import { Navigate, Outlet, Route, Routes } from 'react-router-dom'
+
 import { Footer } from './components/layout/Footer'
 import { Header } from './components/layout/Header'
-import { TransactionForm } from './components/transactions/TransactionForm'
-import { TransactionsList } from './components/transactions/TransactionsList'
 import { useMeQuery } from './store/api/authApi'
+import DashboardPage from './pages/DashboardPage'
+import GoalsPage from './pages/GoalsPage'
 
 interface AppProps {
   dark: boolean
@@ -29,13 +27,7 @@ export default function App({ dark, onToggleDark }: AppProps) {
       <div className="min-h-screen bg-[var(--background)] text-[var(--foreground)] transition-colors duration-300">
         <Header dark={dark} onToggleDark={onToggleDark} />
 
-        <main className="max-w-6xl mx-auto px-5 py-8 space-y-8">
-          <SummaryCards />
-          <ChartsSection />
-          <PieChartsSection />
-          <TransactionForm />
-          <TransactionsList />
-        </main>
+        <Outlet />
 
         <Footer />
       </div>

@@ -2,19 +2,37 @@ import { IoExitOutline, IoMoonOutline, IoSunnyOutline } from 'react-icons/io5'
 import { LogoIcon } from '../icons/Icons'
 import { authApi, useLogoutMutation } from '../../store/api/authApi'
 import { useAppDispatch } from '../../hooks/redux'
+import { FiTarget } from 'react-icons/fi'
+import { LuLayoutDashboard } from 'react-icons/lu'
+import { useState, type JSX } from 'react'
+import { NavLink, useLocation, useNavigate } from 'react-router-dom'
 
 interface HeaderProps {
   dark: boolean
   onToggleDark: () => void
 }
 
+interface NavItems {
+  id: number
+  name: string
+  icon: JSX.Element
+  path: string
+}
+
 export function Header({ dark, onToggleDark }: HeaderProps) {
   const [logout] = useLogoutMutation()
   const dispatch = useAppDispatch()
+  const navigate = useNavigate()
+  const location = useLocation()
+
+  const navItems: NavItems[] = [
+    { id: 1, name: 'Обзор', icon: <LuLayoutDashboard />, path: '/' },
+    { id: 2, name: 'Накопления', icon: <FiTarget />, path: '/goals' },
+  ]
 
   const clickHandler = async () => {
     try {
-      await logout()
+      await logout().unwrap()
       dispatch(authApi.util.resetApiState())
     } catch (e) {
       console.log(e)
@@ -29,6 +47,20 @@ export function Header({ dark, onToggleDark }: HeaderProps) {
             <LogoIcon />
           </div>
           <span className="text-xl font-600 tracking-tight font-display">FinTrack</span>
+        </div>
+        <div className='flex justify-between gap-5'>
+          {navItems.map(nav => (
+            <NavLink
+              key={nav.id}
+              to={nav.path}
+              end={nav.path === '/'}
+              className={({isActive}) => `flex items-center gap-2 cursor-pointer p-2 rounded-md ${isActive ? 'bg-[var(--muted)]' : ''}`}
+            >
+              {nav.icon}
+              <span className='tracking-tight font-display'>{nav.name}</span>
+            </NavLink>
+          ))
+          }
         </div>
         <div className='flex gap-3'>
           <button
