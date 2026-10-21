@@ -9,7 +9,7 @@ const TYPE_OPTIONS: TransactionType[] = ['expense', 'income']
 export function CategoryManager() {
   const [type, setType] = useState<TransactionType>('expense')
   const { data: categories = [], isFetching } = useGetCategoriesByTypeQuery(type)
-  console.log(categories)
+  
   return (
     <div className="bg-[var(--card)] border border-[var(--border)] rounded-[var(--radius)] p-5 mt-5">
       <h2 className="text-base font-600 mb-4 text-[var(--card-foreground)] font-display">Категории</h2>

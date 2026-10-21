@@ -1,4 +1,5 @@
 import { useGetTransactionsQuery } from '../../store/api/transactionsApi'
+import EmptyState from '../ui/EmptyState'
 import { TransactionRow } from './TransactionRow'
 
 export function TransactionsList() {
@@ -28,9 +29,7 @@ export function TransactionsList() {
 
       <div className="divide-y divide-[var(--border)]">
         {transactions.length === 0 && (
-          <div className="px-5 py-10 text-center text-[var(--muted-foreground)] text-sm">
-            Нет транзакций. Добавьте первую запись выше.
-          </div>
+          <EmptyState message='Нет транзакций. Добавьте первую запись выше.' />
         )}
         {transactions.map((t) => (
           <TransactionRow key={t.transaction.id} transaction={t} />
