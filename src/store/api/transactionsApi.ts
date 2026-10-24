@@ -1,10 +1,14 @@
 import { baseApi } from './baseApi'
 import type { Transaction, TransactionCreate } from '../../types/transaction'
+import type { Period } from '../../types/period';
 
 export const transactionsApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    getTransactions: builder.query<Transaction[], void>({
-      query: () => '/transactions',
+    getTransactions: builder.query<Transaction[], { search?: string; period: Period }>({
+      query: ({ search, period }) => ({
+        url: '/transactions',
+        params: { search: search || undefined, period }
+      }),
       providesTags: (result) =>
         result
           ? [...result.map((t) => ({ type: 'Transaction' as const, id: t.transaction.id })), { type: 'Transaction', id: 'LIST' }]
