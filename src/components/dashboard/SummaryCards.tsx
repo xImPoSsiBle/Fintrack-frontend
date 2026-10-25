@@ -1,10 +1,14 @@
 import { useGetSummaryQuery } from '../../store/api/statsApi';
+import type { Period } from '../../types/period';
 import { formatCurrency } from '../../utils/format'
 import { SummaryCard } from './SummaryCard'
 
+interface SummaryCardsProps {
+  period: Period
+}
 
-export function SummaryCards() {
-  const { data: total, isLoading, isError } = useGetSummaryQuery()
+export function SummaryCards({period}: SummaryCardsProps) {
+  const { data: total, isLoading, isError } = useGetSummaryQuery(period)
 
   if (isLoading) {
     return <div className="text-center py-4">Загрузка данных...</div>

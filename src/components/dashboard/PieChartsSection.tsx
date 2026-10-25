@@ -1,9 +1,14 @@
 import { useGetByCategoryQuery } from '../../store/api/statsApi'
+import type { Period } from '../../types/period'
 import { PieSection } from './PieSection'
 
-export function PieChartsSection() {
-  const { data: expenseByName = [] } = useGetByCategoryQuery("expense")
-  const { data: incomeByName = [] } = useGetByCategoryQuery("income")
+interface PieChartsSectionProps {
+  period: Period
+}
+
+export function PieChartsSection({period}: PieChartsSectionProps) {
+  const { data: expenseByName = [] } = useGetByCategoryQuery({type: "expense", period})
+  const { data: incomeByName = [] } = useGetByCategoryQuery({type: "income", period})
 
 
   return (
