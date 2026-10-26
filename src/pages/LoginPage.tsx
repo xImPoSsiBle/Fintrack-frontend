@@ -1,13 +1,10 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { setCsrfToken } from '../store/authSlice'
-import { useAppDispatch } from '../hooks/redux'
 import { useLoginMutation } from '../store/api/authApi'
 import { getErrorMessage } from '../utils/getErrorMessage'
 
 export default function LoginPage() {
   const navigate = useNavigate()
-  const dispatch = useAppDispatch()
   const [login] = useLoginMutation()
 
   const [username, setUsername] = useState('')
@@ -22,9 +19,7 @@ export default function LoginPage() {
     setIsLoading(true)
 
     try {
-      const data = await login({ username, password }).unwrap()
-
-      dispatch(setCsrfToken(data.csrf_token))
+      await login({ username, password }).unwrap()
       navigate('/')
     } catch (error) {
       setError(getErrorMessage(error, 'Не удалось войти в аккаунт'))

@@ -1,10 +1,8 @@
-import { Navigate, Outlet, Route, Routes } from 'react-router-dom'
+import { Navigate, Outlet } from 'react-router-dom'
 
 import { Footer } from './components/layout/Footer'
 import { Header } from './components/layout/Header'
 import { useMeQuery } from './store/api/authApi'
-import DashboardPage from './pages/DashboardPage'
-import GoalsPage from './pages/GoalsPage'
 
 interface AppProps {
   dark: boolean
@@ -12,13 +10,13 @@ interface AppProps {
 }
 
 export default function App({ dark, onToggleDark }: AppProps) {
-  const { data: user, isLoading } = useMeQuery()
+  const { data, isLoading } = useMeQuery()
 
   if (isLoading) {
     return <div>Загрузка...</div>
   }
 
-  if (!user) {
+  if (!data) {
     return <Navigate to={'/login'} />
   }
 

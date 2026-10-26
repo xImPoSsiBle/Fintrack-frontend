@@ -4,8 +4,8 @@ import { authApi, useLogoutMutation } from '../../store/api/authApi'
 import { useAppDispatch } from '../../hooks/redux'
 import { FiTarget } from 'react-icons/fi'
 import { LuLayoutDashboard } from 'react-icons/lu'
-import { useState, type JSX } from 'react'
-import { NavLink, useLocation, useNavigate } from 'react-router-dom'
+import { type JSX } from 'react'
+import { NavLink, useNavigate} from 'react-router-dom'
 
 interface HeaderProps {
   dark: boolean
@@ -23,7 +23,6 @@ export function Header({ dark, onToggleDark }: HeaderProps) {
   const [logout] = useLogoutMutation()
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
-  const location = useLocation()
 
   const navItems: NavItems[] = [
     { id: 1, name: 'Обзор', icon: <LuLayoutDashboard />, path: '/' },
@@ -34,6 +33,7 @@ export function Header({ dark, onToggleDark }: HeaderProps) {
     try {
       await logout().unwrap()
       dispatch(authApi.util.resetApiState())
+      navigate('/login')
     } catch (e) {
       console.log(e)
     }

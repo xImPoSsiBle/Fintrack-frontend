@@ -19,7 +19,7 @@ export const authApi = baseApi.injectEndpoints({
                 body: data,
             }),
         }),
-        me: builder.query<User, void>({
+        me: builder.query<UserData, void>({
             query: () => "/auth/me",
             providesTags: [{ type: 'Auth' }]
         }),
@@ -28,6 +28,7 @@ export const authApi = baseApi.injectEndpoints({
                 url: "/auth/logout",
                 method: "POST",
             }),
+            invalidatesTags: [{ type: 'Auth' }]
         })
     })
 })

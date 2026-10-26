@@ -27,20 +27,33 @@ const authSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-    .addMatcher(
-      authApi.endpoints.me.matchRejected,
-      (state) => {
-        state.isAuth = false
-        state.csrfToken = null
-      }
-    )
-    .addMatcher(
-      authApi.endpoints.logout.matchFulfilled,
-      (state) => {
-        state.isAuth = false
-        state.csrfToken = null
-      }
-    )
+      .addMatcher(
+        authApi.endpoints.me.matchRejected,
+        (state) => {
+          state.isAuth = false
+          state.csrfToken = null
+        }
+      )
+      .addMatcher(
+        authApi.endpoints.logout.matchFulfilled,
+        (state) => {
+          state.isAuth = false
+          state.csrfToken = null
+        }
+      )
+      .addMatcher(
+        authApi.endpoints.me.matchFulfilled,
+        (state, action) => {
+          state.isAuth = true
+          state.csrfToken = action.payload.csrf_token
+        }
+      )
+      .addMatcher(
+        authApi.endpoints.login.matchFulfilled,
+        (state, action) => {
+          state.isAuth = true
+          state.csrfToken = action.payload.csrf_token
+        })
   }
 })
 
