@@ -26,6 +26,7 @@ export const goalsApi = baseApi.injectEndpoints({
         }),
         getAvailable: builder.query<number, void>({
             query: () => 'goals/available',
+            providesTags: ['Goals', 'Transaction'],
         }),
         deleteGoal: builder.mutation<void, number>({
             query: (id) => ({ url: `/goals/${id}`, method: 'DELETE' }),
@@ -34,10 +35,10 @@ export const goalsApi = baseApi.injectEndpoints({
     })
 })
 
-export const { 
-    useGetAllGoalsQuery, 
-    useCreateGoalMutation, 
-    useAddContributionMutation, 
+export const {
+    useGetAllGoalsQuery,
+    useCreateGoalMutation,
+    useAddContributionMutation,
     useGetAvailableQuery,
     useDeleteGoalMutation
 } = goalsApi
