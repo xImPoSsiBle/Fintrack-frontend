@@ -5,7 +5,7 @@ import { useAppDispatch } from '../../hooks/redux'
 import { FiTarget } from 'react-icons/fi'
 import { LuLayoutDashboard } from 'react-icons/lu'
 import { type JSX } from 'react'
-import { NavLink, useNavigate} from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 
 interface HeaderProps {
   dark: boolean
@@ -40,7 +40,7 @@ export function Header({ dark, onToggleDark }: HeaderProps) {
   }
 
   return (
-    <header className="sticky top-0 z-50 border-b border-[var(--border)] bg-[var(--background)]/90 backdrop-blur-sm">
+    <header className="sticky top-0 z-50 border-b border-border bg-background/90 sm:backdrop-blur-sm">
       <div className="max-w-6xl mx-auto px-5 h-16 flex items-center justify-between">
         <div className="flex items-center gap-3">
           <div className="w-8 h-8 rounded-lg bg-[var(--accent)] flex items-center justify-center">
@@ -48,20 +48,26 @@ export function Header({ dark, onToggleDark }: HeaderProps) {
           </div>
           <span className="text-xl font-600 tracking-tight font-display">FinTrack</span>
         </div>
-        <div className='flex justify-between gap-5'>
+        <nav className='
+          fixed bottom-0 inset-x-0 z-50
+          flex justify-around gap-5 px-5 py-2
+          border-t border-border bg-background/90 backdrop-blur-sm
+          sm:static sm:inset-auto sm:border-0 sm:bg-transparent sm:backdrop-blur-none sm:p-0 sm:justify-between
+          '
+        >
           {navItems.map(nav => (
             <NavLink
               key={nav.id}
               to={nav.path}
               end={nav.path === '/'}
-              className={({isActive}) => `flex items-center gap-2 cursor-pointer p-2 rounded-md ${isActive ? 'bg-[var(--muted)]' : ''}`}
+              className={({ isActive }) => `flex items-center gap-2 cursor-pointer p-2 rounded-md ${isActive ? 'bg-[var(--muted)]' : ''}`}
             >
               {nav.icon}
               <span className='tracking-tight font-display'>{nav.name}</span>
             </NavLink>
           ))
           }
-        </div>
+        </nav>
         <div className='flex gap-3'>
           <button
             onClick={onToggleDark}
